@@ -11,6 +11,7 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
+import androidx.appcompat.widget.AppCompatSpinner
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myfirstdemo.Adapter.FeatureWeatherAdapter
@@ -43,9 +44,9 @@ class FragmentActivity : FragmentActivity() {
         initView()
     }
 
-    private fun initData() {
+    private fun initData(string: String="北京") {
         Thread{
-            val weatherBean = WeatherUtil.instance.getWeather()
+            val weatherBean = WeatherUtil.instance.getWeather(string)
             val msg =  Message()
             msg.what = 1
             msg.obj = weatherBean
@@ -54,16 +55,25 @@ class FragmentActivity : FragmentActivity() {
     }
 
     private fun initView() {
-
+        // Step 1: 准备数据源（可以是 List 或 Array）
         mCities = resources.getStringArray(R.array.cities)
 
-        arrayAdapter = ArrayAdapter<String>(this, R.layout.fragment_activity, mCities)
+        // Step 2: 创建 ArrayAdapter 并绑定数据源
+        val arrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mCities)
+
+        // 设置下拉样式
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//        mbinding.spCity.adapter = arrayAdapter
+
+        // Step 3: 将 ArrayAdapter 设置给 Spinner
+        val spinner = findViewById<AppCompatSpinner>(R.id.sp_city)
+        spinner.adapter = arrayAdapter
+
+        mbinding.spCity.adapter = arrayAdapter
 
         mbinding.spCity.onItemSelectedListener = object :OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                Toast.makeText(this@FragmentActivity,"你好", LENGTH_SHORT).show()
+                initData(p0?.selectedItem.toString())
+                Toast.makeText(this@FragmentActivity,"你好"+p0?.selectedItem, LENGTH_SHORT).show()
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {

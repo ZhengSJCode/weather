@@ -18,10 +18,9 @@ class WeatherUtil {
         }
     }
 
-    fun getWeather() : WeatherBean {
+    fun getWeather(city:String = "北京") : WeatherBean {
         val gson = Gson()
-//        val result = NetUtil.instance.doGet("http://127.0.0.1:5000//weather")
-        val result = NetUtil.instance.doGet("https://v1.yiketianqi.com/api?unescape=1&version=v91&appid=71515994&appsecret=iH0Zss5I")
+        val result = NetUtil.instance.doGet("https://v1.yiketianqi.com/api?unescape=1&version=v91&appid=71515994&appsecret=iH0Zss5I&city=$city")
         val jsonObject =  gson.fromJson(result, WeatherBean::class.java)
         return jsonObject
     }
