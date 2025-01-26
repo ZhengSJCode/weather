@@ -59,7 +59,7 @@ class FragmentActivity : FragmentActivity() {
         mCities = resources.getStringArray(R.array.cities)
 
         // Step 2: 创建 ArrayAdapter 并绑定数据源
-        val arrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mCities)
+        arrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mCities)
 
         // 设置下拉样式
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
