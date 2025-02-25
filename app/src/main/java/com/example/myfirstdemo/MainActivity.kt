@@ -4,20 +4,18 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.os.Message
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import com.example.myfirstdemo.databinding.ActivityMainBinding
 import com.example.mylibrary.NetUtil
 import com.example.mylibrary.WeatherBean
 import com.example.mylibrary.WeatherUtil
-import android.content.pm.PackageManager
+import com.example.myfirstdemo.community.CommunityFragmentActivity
 
 class MainActivity : ComponentActivity() {
 

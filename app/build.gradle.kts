@@ -118,4 +118,7 @@ dependencies {
     //增强了Android特有的功能
     //https://github.com/ReactiveX/RxAndroid
     implementation("io.reactivex.rxjava3:rxandroid:3.0.0")
+
+    implementation ("com.squareup.picasso:picasso:2.71828")
+
 }

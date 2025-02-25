@@ -30,9 +30,10 @@
             android:label="@string/title_activity_fragment"
             android:theme="@style/Theme.MyFirstDemo" />
         <activity
-            android:name=".CommunityFragmentActivity"
+            android:name=".community.CommunityFragmentActivity"
             android:exported="false"
             android:label="@string/title_activity_fragment"
+            android:usesCleartextTraffic="true"
             android:theme="@style/Theme.MyFirstDemo" />
         <activity
             android:name=".MainActivity"

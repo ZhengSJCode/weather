@@ -29,7 +29,7 @@ class WeatherUtil {
     fun getWeather(city:String = "北京") : WeatherBean {
         val gson = Gson()
         val result = NetUtil.instance.doGet("https://v1.yiketianqi.com/api?unescape=1&version=v91&appid=71515994&appsecret=iH0Zss5I&city=$city")
-        val result1 = testGet()
+//        val result1 = testGet()
         val jsonObject =  gson.fromJson(result, WeatherBean::class.java)
         return jsonObject
     }
@@ -37,7 +37,6 @@ class WeatherUtil {
         val client: OkHttpClient = OkHttpClient()
 
         var url: String = Config.ENDPOINT + "api?unescape=1&version=v91&appid=71515994&appsecret=iH0Zss5I&city=$city"
-        url = "https://wwww.baidu.com"
         Log.v(
             "WeatherUtil",
             "url: " + url
