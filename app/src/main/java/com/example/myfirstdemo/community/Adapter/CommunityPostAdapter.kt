@@ -15,7 +15,7 @@ import kotlin.math.log
 
 class CommunityPostAdapter(
     private val context: Context,
-    private val postList: List<Post>
+    private var postList: MutableList<Post> // 使用 MutableList
 ) : RecyclerView.Adapter<CommunityPostAdapter.PostViewHolder>() {
 
     private val TAG: String = "CommunityPostAdapter"
@@ -44,5 +44,11 @@ class CommunityPostAdapter(
 
     override fun getItemCount(): Int {
         return postList.size
+    }
+
+    // 新增方法来更新数据
+    fun updatePosts(newPosts: List<Post>) {
+        postList.addAll(newPosts) // 扩充 postList
+        notifyDataSetChanged() // 通知适配器数据已更改
     }
 } 
