@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
@@ -19,13 +20,23 @@ import com.example.myfirstdemo.databinding.FragmentActivityBinding
 import com.example.mylibrary.WeatherBean
 import com.example.mylibrary.WeatherData
 import com.example.mylibrary.WeatherUtil
+import com.example.mylibrary.api.DefaultService
+import com.example.mylibrary.api.NetworkModule
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observer
+import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.schedulers.Schedulers
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
 
-class FragmentActivity : FragmentActivity() {
+class CommunityFragmentActivity : FragmentActivity() {
+
+
     private lateinit var arrayAdapter: ArrayAdapter<String>
     private lateinit var mCities: Array<String>
     private lateinit var mbinding: FragmentActivityBinding
     private var weatherDataList: List<WeatherData>? = null
-
+    private var service: DefaultService? = null
     private var mHandler: Handler = Handler(Looper.getMainLooper()){
         when(it.what){
             1 -> {
@@ -51,6 +62,11 @@ class FragmentActivity : FragmentActivity() {
             msg.obj = weatherBean
             mHandler.sendMessage(msg)
         }.start()
+
+        val okHttpClient: OkHttpClient = NetworkModule.provideOkHttpClient()
+        val retrofit: Retrofit = NetworkModule.provideRetrofit(okHttpClient)
+        service = retrofit.create(DefaultService::class.java)
+
     }
 
     private fun initView() {
@@ -72,7 +88,7 @@ class FragmentActivity : FragmentActivity() {
         mbinding.spCity.onItemSelectedListener = object :OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 initData(p0?.selectedItem.toString())
-                Toast.makeText(this@FragmentActivity,"你好"+p0?.selectedItem, LENGTH_SHORT).show()
+                Toast.makeText(this@CommunityFragmentActivity,"你好"+p0?.selectedItem, LENGTH_SHORT).show()
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -100,4 +116,37 @@ class FragmentActivity : FragmentActivity() {
 
         weatherDataList = weatherBean.data
     }
+
+    /**
+     * retrofit get请求
+     */
+    private fun testRetrofitGet() {
+        service!!.getWeatherByCity("北京")
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : Observer<WeatherBean> {
+                override fun onSubscribe(d: Disposable) {
+                }
+
+                override fun onNext(s: WeatherBean) {
+                    val sheet: WeatherBean = s
+                    Log.d(
+                        "CommunityFragmentActivity",
+                        "onNext: " + sheet
+                    )
+                }
+
+                override fun onError(e: Throwable) {
+                    Log.d(
+                        "CommunityFragmentActivity",
+                        "onError: " + e.localizedMessage
+                    )
+                }
+
+                override fun onComplete() {
+                }
+            })
+    }
+
+
 }

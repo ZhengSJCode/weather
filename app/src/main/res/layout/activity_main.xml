@@ -20,7 +20,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Button" />
-
+    <Button
+        android:id="@+id/btnServiceStart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+    <Button
+        android:id="@+id/btnServiceStop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+    <Button
+        android:id="@+id/btnServiceBind"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+    <Button
+        android:id="@+id/btnServiceUnBind"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button" />
     <Button
         android:id="@+id/btnSF"
         android:layout_width="match_parent"

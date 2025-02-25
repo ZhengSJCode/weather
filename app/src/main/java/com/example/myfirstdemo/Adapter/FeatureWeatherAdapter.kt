@@ -2,6 +2,7 @@ package com.example.myfirstdemo.Adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,12 +17,15 @@ class FeatureWeatherAdapter(
     private val weatherDataList: List<WeatherData>?
 ) : RecyclerView.Adapter<WeatherViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherViewHolder {
+        Log.d("FeatureWeatherAdapter","onCreateViewHolder: ")
         val view = LayoutInflater.from(mContext).inflate(R.layout.weather_item, parent, false)
         return WeatherViewHolder(view)
     }
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: WeatherViewHolder, position: Int) {
+        Log.d("FeatureWeatherAdapter","onBindViewHolder: ")
+
         val sheshidu =  "℃"
         val weatherData = weatherDataList!![position]
         holder.item1.text = weatherData.wea
